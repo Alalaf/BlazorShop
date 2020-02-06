@@ -1,8 +1,9 @@
+using BlazorShop.Data;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorShop.Data
+namespace BlazorShop.Services
 {
     public class WeatherForecastService
     {
