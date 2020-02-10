@@ -72,12 +72,16 @@ else
                                     </div>
                                 </div>
                                 <div class="row py-2">
-                                    <div class="col-4">
-                                        
+
+                                    <div class="offset-4 col">
+                                        <button type="submit" class="btn btn-primary form-control">Save</button>
                                     </div>
-                                    <div class="col-8">
-                                        <button class="btn btn-primary form-control">Save</button>
-                                    </div>
+                                    @if (objcategory.Id > 0)
+                                    {
+                                        <div class="offset-4 col">
+                                            <button type="submit" class="btn btn-danger form-control" @onclick="DeleteCategory">Delete</button>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -103,7 +107,7 @@ else
 
     void AddNewCategory()
     {
-        Category objcategory = new Category();
+        objcategory = new Category();
         objcategory.Id = 0;
         showpopup = true;
     }
@@ -112,6 +116,14 @@ else
     {
         objcategory = category;
         showpopup = true;
+    }
+
+    void DeleteCategory()
+    {
+        showpopup = false;
+        var result = Service.DeleteCategory(objcategory);
+        categories.Clear();
+        categories = Service.GetCategory();
     }
 
     void closepopup()
