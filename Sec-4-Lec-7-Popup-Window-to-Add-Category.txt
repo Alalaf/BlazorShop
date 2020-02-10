@@ -1,0 +1,26 @@
+<div class="modal" tabindex="-1" style="display:block" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="text-info">Category</h3>
+                    <button type="button" class="close">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="row py-2">
+                                <div class="col-4">
+
+                                </div>
+                                <div class="col-8">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

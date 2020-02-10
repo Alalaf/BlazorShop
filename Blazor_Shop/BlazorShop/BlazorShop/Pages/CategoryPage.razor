@@ -1,0 +1,136 @@
+﻿@page "/Category"
+@using BlazorShop.Data
+@using BlazorShop.Services
+
+@inherits OwningComponentBase<CategoryServices>
+
+
+@if (categories == null)
+{
+    <p><em>No Categories Yet Please Add</em></p>
+}
+else
+{
+    <div class="container border p-3">
+        <div class="row">
+            <div class="col-5">
+                <h3 class="text-info">Category List</h3>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-outline-info form-control" @onclick="AddNewCategory">Add New Category</button>
+            </div>
+        </div>
+        <div class="row pt-4">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var obj in categories)
+                    {
+                        <tr>
+                            <td>@obj.Name</td>
+                            <td>
+                                <button class="btn btn-primary" style="width:150px" @onclick="(()=> EditCategory(obj))">
+                                Edit
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@if (showpopup)
+{
+    <div class="modal" tabindex="-1" style="display:block" role="dialog">
+        <EditForm Model="objcategory" OnValidSubmit="@ValidSubmit">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="text-info">@(objcategory.Id !=0 ? "Update" : "Create") Category</h3>
+                        <button type="button" class="close" @onclick="closepopup">
+                            <span aria-hidden="true">X</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="row py-2">
+                                    <div class="col-4">
+                                        Category Name
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text" class="form-control" @bind="objcategory.Name"/>
+                                    </div>
+                                </div>
+                                <div class="row py-2">
+                                    <div class="col-4">
+                                        
+                                    </div>
+                                    <div class="col-8">
+                                        <button class="btn btn-primary form-control">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+
+}
+
+
+
+@code {
+    List<Category> categories;
+    bool showpopup = false;
+    Category objcategory = new Category();
+
+    protected override void OnInitialized()
+    {
+        categories = Service.GetCategory();
+    }
+
+    void AddNewCategory()
+    {
+        Category objcategory = new Category();
+        objcategory.Id = 0;
+        showpopup = true;
+    }
+
+    void EditCategory(Category category)
+    {
+        objcategory = category;
+        showpopup = true;
+    }
+
+    void closepopup()
+    {
+        showpopup = false;
+    }
+
+    void ValidSubmit()
+    {
+        var result = false;
+        showpopup = false;
+        if (objcategory.Id>0)
+        {
+            result = Service.UpdateCategory(objcategory);
+        }
+        else
+        {
+            result = Service.CreateCategory(objcategory);
+        }
+        categories = Service.GetCategory();
+    }
+}
