@@ -4,49 +4,52 @@
 
 @inherits OwningComponentBase<CategoryServices>
 
+<AuthorizeView>
+    <Authorized Context="Auth">
+        @if (categories == null)
+        {
+            <p><em>No Categories Yet Please Add</em></p>
+        }
+        else
+        {
+            <div class="container border p-3">
+                <div class="row">
+                    <div class="col-5">
+                        <h3 class="text-info">Category List</h3>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-outline-info form-control" @onclick="AddNewCategory">Add New Category</button>
+                    </div>
+                </div>
+                <div class="row pt-4">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obj in categories)
+                            {
+                                <tr>
+                                    <td>@obj.Name</td>
+                                    <td>
+                                        <button class="btn btn-primary" style="width:150px" @onclick="(()=> EditCategory(obj))">
+                                            Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
 
-@if (categories == null)
-{
-    <p><em>No Categories Yet Please Add</em></p>
-}
-else
-{
-    <div class="container border p-3">
-        <div class="row">
-            <div class="col-5">
-                <h3 class="text-info">Category List</h3>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="col-3">
-                <button class="btn btn-outline-info form-control" @onclick="AddNewCategory">Add New Category</button>
-            </div>
-        </div>
-        <div class="row pt-4">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var obj in categories)
-                    {
-                        <tr>
-                            <td>@obj.Name</td>
-                            <td>
-                                <button class="btn btn-primary" style="width:150px" @onclick="(()=> EditCategory(obj))">
-                                Edit
-                                </button>
-                            </td>
-                        </tr>
-                    }
-
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-}
+        }
+    </Authorized>
+</AuthorizeView>
 
 @if (showpopup)
 {
@@ -55,7 +58,7 @@ else
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="text-info">@(objcategory.Id !=0 ? "Update" : "Create") Category</h3>
+                        <h3 class="text-info">@(objcategory.Id != 0 ? "Update" : "Create") Category</h3>
                         <button type="button" class="close" @onclick="closepopup">
                             <span aria-hidden="true">X</span>
                         </button>
@@ -68,7 +71,7 @@ else
                                         Category Name
                                     </div>
                                     <div class="col-8">
-                                        <input type="text" class="form-control" @bind="objcategory.Name"/>
+                                        <input type="text" class="form-control" @bind="objcategory.Name" />
                                     </div>
                                 </div>
                                 <div class="row py-2">
@@ -92,6 +95,7 @@ else
     </div>
 
 }
+
 
 
 
@@ -135,7 +139,7 @@ else
     {
         var result = false;
         showpopup = false;
-        if (objcategory.Id>0)
+        if (objcategory.Id > 0)
         {
             result = Service.UpdateCategory(objcategory);
         }

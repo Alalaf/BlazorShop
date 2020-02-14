@@ -63,12 +63,14 @@ else
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="text-info">@(objproduct.Id !=0 ? "Update" : "Create") Category</h3>
+                        <h3 class="text-info">@(objproduct.Id !=0 ? "Update" : "Create") Product</h3>
                         <button type="button" class="close" @onclick="closepopup">
                             <span aria-hidden="true">X</span>
                         </button>
                     </div>
                     <div class="modal-body">
+                        <DataAnnotationsValidator/>
+                        
                         <div class="row">
                             <div class="col-9">
                                 <div class="row py-2">
@@ -76,10 +78,15 @@ else
                                         Category
                                     </div>
                                     <div class="col-8">
-                                        <select class="form-control">
+                                        <select @onchange="CategorySelection" class="form-control">
                                             @foreach (var cat in categories)
                                             {
-                                                <option value="@cat.Id">@cat.Name</option>
+                                                <option value="@cat.Id" 
+                                                   selected="@(cat.Id == objproduct.CategoryId? true: false)"
+                                                 >
+                                                   @cat.Name
+                                                 
+                                                </option>
                                             }
                                         </select>
                                     </div>
@@ -90,6 +97,7 @@ else
                                     </div>
                                     <div class="col-8">
                                         <input type="text" class="form-control" @bind="objproduct.Name" />
+                                        <ValidationMessage For="@(()=>objproduct.Name)"></ValidationMessage>
                                     </div>
                                 </div>
                                 <div class="row py-2">
@@ -98,6 +106,7 @@ else
                                     </div>
                                     <div class="col-8">
                                         <input type="text" class="form-control" @bind="objproduct.Price" />
+                                        <ValidationMessage For="@(()=>objproduct.Price)"></ValidationMessage>
                                     </div>
                                 </div>
                                 <div class="row py-2">
@@ -128,6 +137,9 @@ else
                                         </div>
                                     }
                                 </div>
+                            </div>
+                            <div class="col-3">
+                                <img src="@DisplayImage(objproduct.Image)" width="100%"/>
                             </div>
                         </div>
                     </div>
@@ -221,5 +233,13 @@ else
             return finalstr;
         }
         return "";
+    }
+
+    void CategorySelection(ChangeEventArgs e)
+    {
+        if(int.TryParse(e.Value.ToString(),out int id))
+        {
+            objproduct.CategoryId = id;
+        }
     }
 }

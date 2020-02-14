@@ -12,6 +12,7 @@ namespace BlazorShop.Data
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        [Required]
         [Range(0,500)]
         public double Price { get; set; }
         public byte[] Image { get; set; }
