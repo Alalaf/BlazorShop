@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="Initializer\" />
-    <Folder Include="Pages\Compoenents\" />
   </ItemGroup>
 
 </Project>

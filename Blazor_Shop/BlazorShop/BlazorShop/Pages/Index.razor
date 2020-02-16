@@ -4,6 +4,14 @@
 @using BlazorShop.Data
 @inherits OwningComponentBase<ProductServices>
 
+<div class="row">
+     >
+    @foreach(var product in Products)
+    {
+        <BlazorShop.Pages.Compoenents.IndvisualProducts product="product"></BlazorShop.Pages.Compoenents.IndvisualProducts>
+    }
+</div>
+
 @code{
     List<Product> Products = new List<Product>();
     protected override void OnInitialized()
