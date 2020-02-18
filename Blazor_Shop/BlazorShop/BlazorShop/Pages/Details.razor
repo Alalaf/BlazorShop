@@ -1,0 +1,34 @@
+﻿@page "/details/{ProductId:int}"
+@using BlazorShop.Data
+@using BlazorShop.Services
+@*@inherits OwningComponentBase<AppointmentService>*@
+@inherits OwningComponentBase<ProductServices>
+
+<h3>Details</h3>
+
+@code {
+    [Parameter]
+    public int ProductId { get; set; }
+    public Appointment appointment { get; set; }
+    bool ShowAppointment=false;
+
+    protected override void OnInitialized()
+    {
+        appointment = new Appointment()
+        {
+            AppointmentDate = DateTime.Now
+
+        };
+        appointment.product = Service.GetProduct(ProductId);
+    }
+
+    void OnClickShowAppointment()
+    {
+        ShowAppointment = true;
+    }
+
+    void OnClickShowDetails()
+    {
+        ShowAppointment = false;
+    }
+}
