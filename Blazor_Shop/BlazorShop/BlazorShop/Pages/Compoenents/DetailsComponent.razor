@@ -1,0 +1,78 @@
+﻿@using BlazorShop.Data
+@using BlazorShop.Services
+
+
+
+
+<div class="p-4 border rounded row">
+    <div class="col-8">
+        <div class="form-group row">
+            <div class="col-4">
+                Name
+            </div>
+            <div class="col-8">
+                <input disabled value="@appointment.product.Name" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                price
+            </div>
+            <div class="col-8">
+                <input disabled value="@appointment.product.Price" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                Color
+            </div>
+            <div class="col-8">
+                <input disabled value="@appointment.product.ShadeColor" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                Category
+            </div>
+            <div class="col-8">
+                <input disabled value="@appointment.product.Category.Name" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <a href="/" class="btn btn-success form-control">Back To List</a>
+            </div>
+            <div class="col-4">
+                <button @onclick="OnClickShowAppointment" class="btn btn-primary form-control">Book Appointment</button>
+                
+            </div>
+        </div>
+    </div>
+    <div class="offset-1 col-3">
+        <img src="@DisplayImage(appointment.product.Image)"
+             width="100%" style="border-radius:5px; border:1px solid #bbb9b9"/>
+    </div>
+</div>
+
+
+
+@code {
+    [Parameter]
+    public Appointment appointment { get; set; }
+
+    [Parameter]
+    public EventCallback OnClickShowAppointment { get; set; }
+
+    string DisplayImage(byte[] image)
+    {
+        if(image != null)
+        {
+            var base64 = Convert.ToBase64String(image);
+            var finalstr = string.Format("data:image/jpg;base64,{0}", base64);
+            return finalstr;
+        }
+        return "";
+    }
+}

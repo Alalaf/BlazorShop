@@ -1,10 +1,23 @@
-﻿@page "/details/{ProductId:int}"
+﻿@page "/Details/{ProductId:int}"
 @using BlazorShop.Data
 @using BlazorShop.Services
-@*@inherits OwningComponentBase<AppointmentService>*@
+
+
 @inherits OwningComponentBase<ProductServices>
 
-<h3>Details</h3>
+<br />
+<h2 class="text-info">@(ShowAppointment?"Book Appintment":"Product Details")</h2>
+
+
+
+@if (ShowAppointment)
+{
+    @*<BlazorShop.Pages.Compoenents.AppointmentComponent OnClickShowDetails="OnClickShowDetails" appointment="ppointment"></BlazorShop.Pages.Compoenents.AppointmentComponent>*@
+}
+else
+{
+    <BlazorShop.Pages.Compoenents.DetailsComponent OnClickShowAppointment="OnClickShowAppointment" appointment="appointment"></BlazorShop.Pages.Compoenents.DetailsComponent>
+}
 
 @code {
     [Parameter]
