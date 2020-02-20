@@ -17,6 +17,8 @@ namespace BlazorShop.Services
 
         public bool CreateAppoinment(Appointment appointment)
         {
+            appointment.ProductId = appointment.product.Id;
+            appointment.product = null;
             _db.Add(appointment);
             _db.SaveChanges();
             return true;

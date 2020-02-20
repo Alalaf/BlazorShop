@@ -43,6 +43,7 @@ namespace BlazorShop
             services.AddSingleton<WeatherForecastService>();
             services.AddScoped<CategoryServices>();
             services.AddScoped<ProductServices>();
+            services.AddScoped<AppointmentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
